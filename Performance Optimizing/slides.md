@@ -31,11 +31,15 @@ hideInToc: true
 
 # Index
 
-<Toc columns="2" class="gap-20"/>
+<Toc columns="2" class="gap-20" maxDepth="1"/>
 
+
+---
+layout: section
 ---
 
 # Scope Hoisting
+
 
 ---
 
@@ -66,10 +70,10 @@ add();
 export function add() {
   console.log('sublib add');
 }
-
 ```
 
 </v-click>
+
 
 ---
 
@@ -77,7 +81,7 @@ First pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
 
 `npx webpack index.js bundle.js`
 
-```js {0-66|67-82|83-92|93-104} {maxHeight:'400px'}
+```js {0-66|67-82|83-92|93-104} {maxHeight:'350px'}
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -185,10 +189,14 @@ function add() {
 
 ```
 
+**💡 wrapping each module in a function, which is called when the module is imported**
+
 
 ---
 
 Then pack with rollup@4.0.0 <twemoji-grinning-face/>
+
+
 
 `npx rollup index.js`
 
@@ -205,9 +213,14 @@ function add() {
 
 add();
 ```
+
+**💡 the top-level variables of each module are renamed to ensure they are unique**
+
+
 ---
 
 Last pack with parcel@2.0.0 <twemoji-grinning-squinting-face />
+
 
 `npx parcel build index.js --no-source-maps`
 
@@ -215,26 +228,115 @@ Last pack with parcel@2.0.0 <twemoji-grinning-squinting-face />
 console.log("sublib add"),console.log("index add");
 ```
 
+**💡 collaborating with tree-shaking futher**
+
+
+---
+layout: two-cols
 ---
 
-# Cascading Cache Invalidation
+**Without Scope Hoisting 🧐**
+
+- Separate isolated scope
+- Side effects run at the expected time
+- HMR
+- Code that cannot be statically analyzed 
+- Development Mode
+
+::right::
+
+**With Scope Hoisting 🧐**
+
+- Single scope
+- Download size
+- Runtime performance without object lookups
+- Production Mode
+
+
+---
+
+## Side Effects
+
+<div class="grid grid-cols-2 gap-8">
+<div>
+
+`app.js`
+```js
+import {add} from 'math';
+console.log(add(2, 3));
+```
+
+`node_modules/math/index.js:`
+```js {3|all}
+export {add} from './add.js';
+export {multiply} from './multiply.js';
+let loaded = Date.now();
+export function elapsed() {
+  return Date.now() - loaded;
+}
+```
+
+`node_modules/math/package.json:`
+```js{all|3}
+{
+  "name": "math"
+  "sideEffects": false
+}
+```
+
+</div>
+<div>
+
+WHEN?
+- DOM manipulation
+- Log Something
+- Gloabl variable assignment
+- And so on ...
+
+**sideEffects types: false | string | array\<string\>**
+
+</div>
+</div>
+
+
+---
+layout: quote
+---
+
+Reference Links:
+
+> https://parceljs.org/features/scope-hoisting/
+
+> https://blog.developer.adobe.com/optimizing-javascript-through-scope-hoisting-2259ef7f5994
+
+
+---
+layout: section
+---
+
+# Cascading Cache
 
 打包粒度
 级联缓存
 
 
 ---
+layout: section
+---
 
 # Polyfill
-polyfill
 
 
-
+---
+layout: section
 ---
 
 # Font
 字体
 
+
+---
+layout: section
 ---
 
 # Prexxx 
@@ -242,24 +344,30 @@ preconnect prefetch
 
 
 ---
+layout: section
+---
 
 # JS load and execute
 js 加载执行机制
 
 
-
+---
+layout: section
 ---
 
 # requestIdleCallback
 
 
-
+---
+layout: section
 ---
 
 # Image
 图片
 
 
+---
+layout: section
 ---
 
 # Compositing Layer
