@@ -287,7 +287,7 @@ export function elapsed() {
 </div>
 <div>
 
-WHEN?
+**WHEN?**
 - DOM manipulation
 - Log Something
 - Gloabl variable assignment
@@ -300,24 +300,145 @@ WHEN?
 
 
 ---
-layout: quote
----
-
-Reference Links:
-
-> https://parceljs.org/features/scope-hoisting/
-
-> https://blog.developer.adobe.com/optimizing-javascript-through-scope-hoisting-2259ef7f5994
-
-
----
 layout: section
 ---
 
 # Cascading Cache
 
-打包粒度
-级联缓存
+---
+
+## What's Good Cache Strategy
+
+<div v-click class="mt-4">
+
+- Add revision information to the filenames of your assets
+- Set max-age caching headers
+
+👉 `filename: '[name]-[contenthash].js'`
+
+- Code splitting such as making node_modules to splited vendor chunk
+
+</div>
+
+<div v-click class="text-5xl mt-20">
+
+But there is a problem ⚠️
+
+</div>
+
+---
+layout: two-cols-header
+clicks: 1
+---
+
+**when making a patch in `vendor.mjs`** <span v-click=1>**, 80% caches are invalid 😨**</span>
+
+`dep2.mjs`/`dep3.mjs` 👇🏼
+```js {monaco-diff}
+import {...} from '/vendor-5e6f.mjs';
+~~~
+import {...} from '/vendor-d4a1.mjs';
+```
+
+`main.mjs` 👇🏼
+```js {monaco-diff}
+import {...} from '/dep2-3c4d.mjs';
+import {...} from '/dep3-d4e5.mjs';
+~~~
+import {...} from '/dep2-2be5.mjs';
+import {...} from '/dep3-3c6f.mjs';
+```
+
+::left::
+
+![caching-module-dependency-graph-before](/caching-module-dependency-graph-before-b10a36a36e.svg)
+
+::right::
+
+<div v-click=1>
+
+![caching-module-dependency-graph-after](/caching-module-dependency-graph-after-b6afbdd237.svg)
+
+</div>
+
+---
+
+**Best Solution - Import Maps**
+
+<div class="grid grid-cols-[1fr_30%] gap-2">
+
+<div>
+
+Code in bunlde references `/vendor.mjs` but loads `/vendor-5e6f.mjs`.
+```js
+import {...} from '/vendor.mjs';
+```
+
+<v-click>
+
+When bundle updates, just change the import map 🤩
+```js
+<script type="importmap">
+{
+  "imports": {
+    "/main.mjs": "/main-1a2b.mjs",
+    "/dep1.mjs": "/dep1-b2c3.mjs",
+    "/dep2.mjs": "/dep2-3c4d.mjs",
+    "/dep3.mjs": "/dep3-d4e5.mjs",
+    "/vendor.mjs": "/vendor-5e6f.mjs",
+  }
+}
+</script>
+```
+</v-click>
+
+<v-click>
+
+Cache is efficient now 🚀
+
+</v-click>
+
+</div>
+
+<div>
+<img v-click alt="caniuse-import-maps" src='/caniuse-import-maps.png' />
+</div>
+
+</div>
+
+---
+
+**Compatible Solution - Service Worker**
+
+Map update with service worker version
+```js
+const importMap = {
+  '/main.mjs': '/main-1a2b.mjs',
+  '/dep1.mjs': '/dep1-b2c3.mjs',
+  '/dep2.mjs': '/dep2-3c4d.mjs',
+  '/dep3.mjs': '/dep3-d4e5.mjs',
+  '/vendor.mjs': '/vendor-5e6f.mjs',
+};
+
+addEventListener('fetch', (event) => {
+  const oldPath = new URL(event.request.url, location).pathname;
+  if (importMap.hasOwnProperty(oldPath)) {
+    const newPath = importMap[oldPath];
+    event.respondWith(fetch(new Request(newPath, event.request)));
+  }
+});
+```
+<v-click>
+
+Before service worker has installed and activated, the un-revisioned files will be requested on the first load
+
+</v-click>
+
+---
+
+**Compatible Solution - Custom Script Loader**
+
+ Uses a manifest in each entry bundle, that's what kinds of bundler do now
 
 
 ---
@@ -372,6 +493,15 @@ layout: section
 
 # Compositing Layer
 合成层优化
+
+---
+layout: quote
+---
+
+Reference Links:
+
+> https://blog.developer.adobe.com/optimizing-javascript-through-scope-hoisting-2259ef7f5994
+> https://philipwalton.com/articles/cascading-cache-invalidation/
 
 
 ---
