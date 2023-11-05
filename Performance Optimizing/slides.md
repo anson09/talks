@@ -1,15 +1,13 @@
 ---
-# theme: dracula
 colorSchema: light
 title: Performance Optimizing
 titleTemplate: '%s'
 favicon: /logo-256.png
 transition: slide-left
-lineNumbers: true
 hideInToc: true
 ---
 
-# Performance Optimizing 9 Tips You May Not Know
+# Performance Optimizing 8 Tips You May Not Know
 
 <p class="absolute right-30px bottom-30px">
   Author: Anson
@@ -305,6 +303,7 @@ layout: section
 
 # Cascading Cache
 
+
 ---
 
 ## What's Good Cache Strategy
@@ -325,6 +324,7 @@ layout: section
 But there is a problem ⚠️
 
 </div>
+
 
 ---
 layout: two-cols-header
@@ -360,6 +360,7 @@ import {...} from '/dep3-3c6f.mjs';
 ![caching-module-dependency-graph-after](/caching-module-dependency-graph-after-b6afbdd237.svg)
 
 </div>
+
 
 ---
 
@@ -406,9 +407,14 @@ Cache is efficient now 🚀
 
 </div>
 
+
 ---
 
-**Compatible Solution - Service Worker**
+<div class="grid grid-cols-[1fr_40%] gap-10">
+<div>
+
+
+**Compatible Solution 1- Service Worker**
 
 Map update with service worker version
 ```js
@@ -434,18 +440,15 @@ Before service worker has installed and activated, the un-revisioned files will 
 
 </v-click>
 
----
+</div>
+<div v-click>
 
-**Compatible Solution - Custom Script Loader**
+**Compatible Solution 2 - Custom Script Loader**
 
- Uses a manifest in each entry bundle, that's what kinds of bundler do now
+Uses a manifest in each entry bundle, that's what kinds of bundler do now
 
-
----
-layout: section
----
-
-# Polyfill
+</div>
+</div>
 
 
 ---
@@ -453,7 +456,128 @@ layout: section
 ---
 
 # Font
-字体
+
+
+---
+
+<div class="grid grid-cols-[1fr_40%] gap-2">
+<div>
+
+**Font render period**
+
+If the font face is not loaded
+
+PERIOD 1️⃣. **BLOCK**
+
+Render with an **invisible** fallback font face, waiting for updating
+
+PERIOD 2️⃣. **SWAP**
+
+Render with a fallback font face, waiting for updating
+
+PERIOD 3️⃣. **FAILURE**
+
+Render fallback, won't update
+
+</div>
+<div v-click>
+
+**Perfomance Impact**
+
+FCP/LCP - Delay text rendering
+
+CLS - Layout shift
+
+
+<!-- <video controls autoplay loop >
+  <source src="/overlap.mp4" type="video/mp4">
+</video> -->
+
+
+![overlap](/overlap.png)
+
+
+</div>
+</div>
+
+
+---
+
+**font-display**
+
+| Value | Block period | Swap period |
+|-------|--------------|-------------|
+| Auto | Varies by browser |	Varies by browser |
+| Block | 2-3 seconds | Infinite |
+| Swap | 0ms | Infinite |
+| Fallback | 100ms | 3 seconds |
+| Optional | 100ms | None |
+
+<div v-click>
+
+**first look in web font 💄: block**
+
+**better for FCP/LCP 🚀: swap**
+
+**better for CLS 🫨: optional**
+
+</div>
+
+
+---
+
+**More Optimizing Methods**
+
+- Inline font declarations
+```html
+<head>
+  <style>
+    @font-face {
+        font-family: "Open Sans";
+        src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
+    }
+
+    body {
+        font-family: "Open Sans";
+    }
+
+    ...etc.
+
+  </style>
+</head>
+```
+
+- PreConnect/PreLoad
+```html
+<head>
+  <link rel="preconnect" href="https://fonts.com" crossorigin>
+</head>
+```
+
+
+---
+
+- WOFF2, 30% smaller than WOFF
+- subset fonts*
+```css
+@font-face {
+    font-family: "Open Sans";
+    src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
+    unicode-range: U+0025-00FF;
+}
+```
+
+- size-adjust
+```css
+@font-face {
+  font-family: "Adjusted Typeface";
+  size-adjust: 150%;
+  src: url(some/path/to/typeface.woff2) format('woff2');
+}
+
+```
+
+<p class="absolute bottom-0 text-xs">* subset font can't used in preload</p>
 
 
 ---
@@ -461,7 +585,7 @@ layout: section
 ---
 
 # Prexxx 
-preconnect prefetch
+preconnect prefetch preload
 
 
 ---
@@ -494,6 +618,7 @@ layout: section
 # Compositing Layer
 合成层优化
 
+
 ---
 layout: quote
 ---
@@ -502,6 +627,7 @@ Reference Links:
 
 > https://blog.developer.adobe.com/optimizing-javascript-through-scope-hoisting-2259ef7f5994
 > https://philipwalton.com/articles/cascading-cache-invalidation/
+> https://web.dev/articles/font-best-practices
 
 
 ---
