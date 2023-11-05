@@ -1,5 +1,5 @@
 ---
-colorSchema: light
+theme: dracula
 title: Performance Optimizing
 titleTemplate: '%s'
 favicon: /logo-256.png
@@ -7,15 +7,15 @@ transition: slide-left
 hideInToc: true
 ---
 
-# Performance Optimizing 8 Tips You May Not Know
+# Performance Optimizing 7 Tips You May Not Know
 
 <p class="absolute right-30px bottom-30px">
-  Author: Anson
+  Author: Anson, speaker at futu
 </p>
 
 <style>
 h1 {
-  background-image: linear-gradient(45deg, #4EC5D4 20%, #146b8c 60%);
+  background-image: linear-gradient(45deg, #d3f0ff 10%, #9b6ba5 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 } 
@@ -503,7 +503,7 @@ CLS - Layout shift
 
 ---
 
-**font-display**
+## font-display
 
 | Value | Block period | Swap period |
 |-------|--------------|-------------|
@@ -526,7 +526,7 @@ CLS - Layout shift
 
 ---
 
-**More Optimizing Methods**
+## More Optimizing Methods
 
 - Inline font declarations
 ```html
@@ -536,13 +536,9 @@ CLS - Layout shift
         font-family: "Open Sans";
         src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
     }
-
     body {
         font-family: "Open Sans";
     }
-
-    ...etc.
-
   </style>
 </head>
 ```
@@ -584,16 +580,93 @@ CLS - Layout shift
 layout: section
 ---
 
-# Prexxx 
-preconnect prefetch preload
+# Pre-xxx
 
 
 ---
-layout: section
+layout: intro
 ---
 
-# JS load and execute
-js 加载执行机制
+*As a website owner, you are the one who knows which resources are most crucial and what the actual user journey on your site is. And to improve the overall performance, perceived speed, and user experience of your website, you could use that knowledge to help the browsers load your pages faster.* 
+
+*That’s where the resource hints come in.*
+
+
+---
+
+## preconnect
+
+[speed up 100–500 ms according to Google](https://web.dev/articles/preconnect-and-dns-prefetch#:~:text=You%20can%20speed%20up%20the%20load%20time%20by%20100%E2%80%93500%20ms%20by%20establishing%20early%20connections%20to%20important%20third%2Dparty%20origins)
+
+```html
+<link rel="preconnect" href="https://example.com">
+```
+
+Performs DNS lookup, TCP handshake, and [TLS](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) negotiation with the origin specified in the href attribute
+
+
+<img alt="[with-preconnect" src='/with-preconnect.png' class="w-1/2"/>
+
+
+<v-click>
+
+Cons: If an established connection is not used quickly (within 10 seconds on Chrome), it would automatically be closed by the browser
+
+</v-click>
+
+
+---
+
+## prefetch
+
+**low priority**, executed as the browser sees fit, which is used for improving the load time of subsequent pages, such as you can apply the prefetch directive during the authentication of a use
+
+[speed up 30% TTI in NETFLIX](https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY1ZjRiZjQ2ZTUyYjMxZDliNjI0OWY3MzA5YWQwMzM4NDAwNjgwY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTY1MzQ3MjI0MTMwOTI0NDkxOTEiLCJlbWFpbCI6ImZpbmFsc29uZzZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTY5OTE3NDM4NiwibmFtZSI6ImFuc29uIC53IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lDNGJiVEhLcVIzSERDbnBkRnVnMndfbi13V0VrSHFaemt1cHhpc0FWVzI5az1zOTYtYyIsImdpdmVuX25hbWUiOiJhbnNvbiIsImZhbWlseV9uYW1lIjoiLnciLCJsb2NhbGUiOiJlbiIsImlhdCI6MTY5OTE3NDY4NiwiZXhwIjoxNjk5MTc4Mjg2LCJqdGkiOiIzOWNhM2Y1NDBhOGY0YTZhZDE2ODRhNTYwZjlmMDhmN2RiN2E4NDNlIn0.iwGAZpy0_20xzs6s5zt4TfjXkcNBsdHF783CU6eVyMkfa-xmPa6wA8mYIUXLwISYdT4h3Web7BQV9bKh-iho_uwZKC-8S3yj5fb9tuDib037c__0D5kvpv4m7blR-wlSlHt0tlezNfBf-Lylml4L5Vut-xqFsilXEQHwUMawdPiqVY0DTNrDAZ3Iil0Q8dEvba56j-FCJqY-abnUsqVRFpta-kpFUKh6gesjYRcTXUcBbv-k2pHPJ8DVpAvvUa4O1XQATV6-aMBMp-DwNaji1wBAyo80i4U4e26Md4IkxFKztXjqWNXqJKFhgmWiHbh2i8zPhvdO7XtTF8iCpe6jpQ:~:text=Prefetching%20HTML%2C%20CSS%20and%20JavaScript%20(React)%20reduced%20Time%2Dto%2DInteractive%20by%2030%25%20for%20future%20navigations)
+
+**take two request**, the second use preftech cache of the first
+
+
+<img alt="prefetch-cache" src='/prefetch-cache.png' class="w-80%"/>
+
+<v-click>
+
+Cons: might increase the data consumption
+
+</v-click>
+
+
+---
+layout: two-cols
+---
+
+## preload
+
+Preload is a declarative fetch, and it’s **mandatory** for the browsers
+
+works best on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) in current page, such as fonts, css, or critical javascript
+
+```html
+<link rel="preload" as="image" href="header-logo.svg">
+```
+
+**only take one request**, warning if not used in 3 seconds
+
+::right::
+
+<img alt="value-of-as" src='/value-of-as.png' class="w-3/4 m-auto"/>
+
+
+---
+layout: two-cols
+---
+
+preload before :
+![preload-before](/preload-before.png)
+
+::right::
+preload after 🚀:
+![preload-after](/preload-after.png)
+
 
 
 ---
@@ -602,13 +675,15 @@ layout: section
 
 # requestIdleCallback
 
+---
 
 ---
 layout: section
 ---
 
 # Image
-图片
+
+---
 
 
 ---
@@ -616,7 +691,8 @@ layout: section
 ---
 
 # Compositing Layer
-合成层优化
+
+---
 
 
 ---
@@ -626,12 +702,16 @@ layout: quote
 Reference Links:
 
 > https://blog.developer.adobe.com/optimizing-javascript-through-scope-hoisting-2259ef7f5994
+
 > https://philipwalton.com/articles/cascading-cache-invalidation/
+
 > https://web.dev/articles/font-best-practices
+
+> https://nitropack.io/blog/post/resource-hints-performance-optimization#:~:text=dns%2Dprefetch%20and%20preconnect%20are,resources%20for%20the%20current%20page.
 
 
 ---
 layout: end
 ---
 
-End
+Thank you! 🙏🏼
