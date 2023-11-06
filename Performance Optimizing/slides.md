@@ -668,14 +668,17 @@ preload after 🚀:
 ![preload-after](/preload-after.png)
 
 
-
 ---
 layout: section
 ---
 
 # requestIdleCallback
 
+
 ---
+
+
+
 
 ---
 layout: section
@@ -683,7 +686,52 @@ layout: section
 
 # Image
 
+
 ---
+
+## Understand Format
+
+- jpeg/jpg: lossy image format, good for photos, but **does not support transparency or lossless compression**
+- png: lossless image format, much **larger** than jpegs or other lossy image formats, but **support transparency** and offer much **higher quality** for fine details
+- gif: lossless compression and can be used for animations, up to 8 bits per pixel and a **maximum of 256 colors** from the 24-bit color space
+
+<v-click>
+
+**More Recommanded:**
+
+- **webp**: supports both **lossy and lossless** compression as well as **animation and transparency**，offers better compression for the same quality as jpegs and pngs
+- heic/heif: supports both **lossy and lossless** compression, **better compression** than webp, jpeg, png and gif, but **only apple system** because it is complex and expensive to license
+- avif:  **lossy** image format based on the AV1 video format.,  offers **significant compression** and quality improvements over jpeg and webp
+
+</v-click>
+
+
+---
+
+## Compatibility
+
+<br>
+
+<div class="grid grid-cols-4 gap-2">
+  <img alt="animated-webp-supported" src='/animated-webp-supported.webp'/>
+  <img alt="caniuse-webp" src='/caniuse-webp.png'/>
+  <img alt="caniuse-heic" src='/caniuse-heic.png'/>
+  <img alt="caniuse-avif" src='/caniuse-avif.png' class="relative bottom-2px"/>
+</div>
+
+<v-click>
+
+```html
+<picture>
+  <source type="image/heic" srcset="/image.heic">
+  <source type="image/avif" srcset="/image.avif">
+  <source type="image/webp" srcset="/image.webp">
+  <source type="image/jpeg" srcset="/image.jpeg">
+  <img src="/image.jpeg" alt="Description">
+</picture>
+```
+
+</v-click>
 
 
 ---
@@ -692,7 +740,10 @@ layout: section
 
 # Compositing Layer
 
+
 ---
+
+
 
 
 ---
