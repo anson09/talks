@@ -7,10 +7,10 @@ transition: slide-left
 hideInToc: true
 ---
 
-# Performance Optimizing 7 Tips You May Not Know
+# 7 Talks on Performance Optimization
 
 <p class="absolute right-30px bottom-30px">
-  Author: Anson, speaker at futu
+ 🥸Author: Anson, speaker from futu
 </p>
 
 <style>
@@ -677,7 +677,101 @@ layout: section
 
 ---
 
+## Methods used to schedule jobs
 
+<v-click>
+
+- SetTimeout / SetInterval / postTask
+- rAF
+- queueMicrotask
+
+</v-click>
+
+<v-click>
+
+But they are not really idle schedule which suitable for **non-critical** tasks, such as: 
+
+- Analytics
+- Logging
+- Prefetching
+- And so on ...
+
+More important works like **rendering** and **user interaction** will be blocked
+
+Scheduling non-essential work yourself is very difficult to do. It’s impossible to figure out exactly how much frame time remains because after requestAnimationFrame callbacks execute there are style calculations, layout, paint, and other browser internals that need to run
+
+</v-click>
+
+---
+
+<div class="grid grid-cols-2 gap-2">
+
+<div>
+
+**Free time at the end of a frame:**
+
+rest time of (**16.67ms** in 60fps) each frame
+<img  alt="ric-busy" src='/ric-busy.webp' class="m-auto"/>
+</div>
+<div>
+
+**User is inactive:**
+
+at most **50ms** when no after render work
+<img  alt="ric-idle" src='/ric-idle.png' class="m-auto"/>
+
+**100ms** is the maximum time human can feel the delay
+
+</div>
+</div>
+
+
+---
+
+## Code Example
+
+```js
+let handler = null;
+
+// When browser is busy, rIC won't be called, using timeout to force trigger
+handler = requestIdleCallback(myNonEssentialWork, { timeout: 2000 });
+
+function myNonEssentialWork (deadline) {
+  // deadline.timeRemaining() is the amount of time left in the current idle period
+  // If the callback function is executed due to a timeout，deadline.didTimeout is true
+  while ((deadline.timeRemaining() > 0 || deadline.didTimeout) &&
+         tasks.length > 0) {
+       doWorkIfNeeded();
+    }
+  if (tasks.length > 0) {
+    handler = requestIdleCallback(myNonEssentialWork);
+  }
+}
+
+```
+
+cancel the callback
+```js
+cancelIdleCallback(handle);
+
+```
+
+
+---
+
+## Best Practice
+
+**Recommended:**
+
+- Lower priority tasks
+- Use timeouts only when needed
+
+**Not Recommended:**
+
+- DOM Manipulation (could build Document Fragment, then push to raF)
+- Add microtask
+- Tasks which could take an unpredictable amount of time
+- Overrun the deadline
 
 
 ---
@@ -697,7 +791,7 @@ layout: section
 
 <v-click>
 
-**More Recommanded:**
+**More Recommended:**
 
 - **webp**: supports both **lossy and lossless** compression as well as **animation and transparency**，offers better compression for the same quality as jpegs and pngs
 - heic/heif: supports both **lossy and lossless** compression, **better compression** than webp, jpeg, png and gif, but **only apple system** because it is complex and expensive to license
@@ -745,7 +839,6 @@ layout: section
 
 
 
-
 ---
 layout: quote
 ---
@@ -758,8 +851,9 @@ Reference Links:
 
 > https://web.dev/articles/font-best-practices
 
-> https://nitropack.io/blog/post/resource-hints-performance-optimization#:~:text=dns%2Dprefetch%20and%20preconnect%20are,resources%20for%20the%20current%20page.
+> https://nitropack.io/blog/post/resource-hints-performance-optimization
 
+> https://developer.chrome.com/blog/using-requestidlecallback/
 
 ---
 layout: end
