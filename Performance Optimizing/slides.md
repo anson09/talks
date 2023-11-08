@@ -331,7 +331,7 @@ layout: two-cols-header
 clicks: 1
 ---
 
-**when making a patch in `vendor.mjs`** <span v-click=1>**, 80% caches are invalid 😨**</span>
+**when making a patch in `vendor.mjs`** <span v-click=1 text-2xl>**, 80% caches are invalid 😨**</span>
 
 `dep2.mjs`/`dep3.mjs` 👇🏼
 ```js {monaco-diff}
@@ -660,11 +660,11 @@ works best on resources that are part of the [critical rendering path](https://d
 layout: two-cols
 ---
 
-preload before :
+**preload before :**
 ![preload-before](/preload-before.png)
 
 ::right::
-preload after 🚀:
+**preload after 🚀:**
 ![preload-after](/preload-after.png)
 
 
@@ -836,8 +836,84 @@ layout: section
 
 
 ---
+layout: intro
+---
 
+*Painting can break the elements in the layout tree into layers. Promoting content into layers on the GPU (instead of the main thread on the CPU) improves paint and repaint performance. There are specific properties and elements that instantiate a layer, including \<video\> and \<canvas\>, and any element which has the CSS properties of opacity, a 3D transform, will-change, and a few others. These nodes will be painted onto their own layer, along with their descendants, unless a descendant necessitates its own layer for one (or more) of the above reasons.*
 
+---
+
+**Before optimizing**
+
+<div class="grid grid-cols-2 gap-2">
+<div>
+
+```html
+<html>
+  <body>
+    <h1>title</h1>
+    <p>content</p>
+  </body>
+  <style>
+    @keyframes move {
+      from {
+        left: 0;
+      }
+      to {
+        left: 600px;
+      }
+    }
+    p {
+      position: absolute;
+      animation: move 5s ease-in-out infinite alternate;
+    }
+  </style>
+</html>
+```
+</div>
+<div>
+
+![composite-before](/composite-before.png)
+
+</div>
+</div>
+
+---
+
+**After optimizing**
+
+<div class="grid grid-cols-2 gap-2">
+<div>
+
+```html
+<html>
+  <body>
+    <h1>title</h1>
+    <p>content</p>
+  </body>
+  <style>
+    @keyframes move {
+      from {
+        translate: translateX(0);
+      }
+      to {
+        transform: translateX(600px);
+      }
+    }
+    p {
+      position: absolute;
+      animation: move 5s ease-in-out infinite alternate;
+    }
+  </style>
+</html>
+```
+</div>
+<div>
+
+![composite-after](/composite-after.png)
+
+</div>
+</div>
 
 ---
 layout: quote
