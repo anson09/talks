@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "slidev --open",
-    "build": "slidev build --base /talks/",
+    "build": "slidev build --base /performance-optimizing/ --out ../dist/performance-optimizing",
     "fmt": "slidev format",
-    "export": "slidev export --dark"
+    "export": "slidev export --per-slide --output performance-optimizing.pdf"
   },
   "dependencies": {
     "@slidev/cli": "^0.43.13",
