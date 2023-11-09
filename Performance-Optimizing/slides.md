@@ -21,6 +21,9 @@ h1 {
 } 
 </style>
 
+<!--
+general methods: network、cache、resource、runtime、api
+-->
 
 ---
 layout: intro
@@ -235,20 +238,20 @@ layout: two-cols
 
 **Without Scope Hoisting 🧐**
 
+- Development Mode
 - Separate isolated scope
 - Side effects run at the expected time
 - HMR
-- Code that cannot be statically analyzed 
-- Development Mode
+- Code which can't be statically analyzed 
 
 ::right::
 
 **With Scope Hoisting 🧐**
 
+- Production Mode
 - Single scope
 - Download size
 - Runtime performance without object lookups
-- Production Mode
 
 
 ---
@@ -702,6 +705,7 @@ Scheduling non-essential work yourself is very difficult to do. It’s impossibl
 
 </v-click>
 
+
 ---
 
 <div class="grid grid-cols-2 gap-2">
@@ -739,8 +743,7 @@ handler = requestIdleCallback(myNonEssentialWork, { timeout: 2000 });
 function myNonEssentialWork (deadline) {
   // deadline.timeRemaining() is the amount of time left in the current idle period
   // If the callback function is executed due to a timeout，deadline.didTimeout is true
-  while ((deadline.timeRemaining() > 0 || deadline.didTimeout) &&
-         tasks.length > 0) {
+  while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && tasks.length > 0) {
        doWorkIfNeeded();
     }
   if (tasks.length > 0) {
@@ -768,7 +771,7 @@ cancelIdleCallback(handle);
 
 **Not Recommended:**
 
-- DOM Manipulation (could build Document Fragment, then push to raF)
+- DOM Manipulation (could build Document Fragment, then push to rAF)
 - Add microtask
 - Tasks which could take an unpredictable amount of time
 - Overrun the deadline
@@ -841,6 +844,7 @@ layout: intro
 
 *Painting can break the elements in the layout tree into layers. Promoting content into layers on the GPU (instead of the main thread on the CPU) improves paint and repaint performance. There are specific properties and elements that instantiate a layer, including \<video\> and \<canvas\>, and any element which has the CSS properties of opacity, a 3D transform, will-change, and a few others. These nodes will be painted onto their own layer, along with their descendants, unless a descendant necessitates its own layer for one (or more) of the above reasons.*
 
+
 ---
 
 **Before optimizing**
@@ -878,6 +882,7 @@ layout: intro
 </div>
 </div>
 
+
 ---
 
 **After optimizing**
@@ -894,7 +899,7 @@ layout: intro
   <style>
     @keyframes move {
       from {
-        translate: translateX(0);
+        transform: translateX(0);
       }
       to {
         transform: translateX(600px);
@@ -915,6 +920,7 @@ layout: intro
 </div>
 </div>
 
+
 ---
 layout: quote
 ---
@@ -930,6 +936,7 @@ Reference Links:
 > https://nitropack.io/blog/post/resource-hints-performance-optimization
 
 > https://developer.chrome.com/blog/using-requestidlecallback/
+
 
 ---
 layout: end
