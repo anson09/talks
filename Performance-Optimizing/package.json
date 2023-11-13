@@ -9,7 +9,7 @@
     "export": "slidev export --per-slide --output performance-optimizing.pdf"
   },
   "dependencies": {
-    "@slidev/cli": "^0.43.13",
+    "@slidev/cli": "^0.43.15",
     "@slidev/theme-default": "^0.21.2",
     "@slidev/theme-seriph": "^0.21.3",
     "slidev-theme-dracula": "^0.2.0"

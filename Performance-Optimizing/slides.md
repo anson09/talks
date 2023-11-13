@@ -9,16 +9,24 @@ hideInToc: true
 
 # 7 Talks on Performance Optimization
 
-<p class="absolute right-30px bottom-30px">
- 🥸Author: Anson, speaker from futu
-</p>
+<div class="absolute right-30px bottom-30px">
+<p class="author">🥸 Author: Anson, speaker from futu</p>
+<sub>online slide: <a>https://talks.anson.ltd/performance-optimizing/</a></sub>
+</div>
+
 
 <style>
 h1 {
   background-image: linear-gradient(45deg, #d3f0ff 10%, #9b6ba5 70%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-} 
+}
+
+p.author {
+  margin: 0;
+  text-align: right;
+}
+
 </style>
 
 <!--
@@ -330,39 +338,35 @@ But there is a problem ⚠️
 
 
 ---
-layout: two-cols-header
-clicks: 1
+layout: two-cols
 ---
 
-**when making a patch in `vendor.mjs`** <span v-click=1 text-2xl>**, 80% caches are invalid 😨**</span>
-
 `dep2.mjs`/`dep3.mjs` 👇🏼
-```js {monaco-diff}
-import {...} from '/vendor-5e6f.mjs';
-~~~
-import {...} from '/vendor-d4a1.mjs';
+```js
+- import {...} from '/vendor-5e6f.mjs';
++ import {...} from '/vendor-d4a1.mjs';
 ```
 
 `main.mjs` 👇🏼
-```js {monaco-diff}
-import {...} from '/dep2-3c4d.mjs';
-import {...} from '/dep3-d4e5.mjs';
-~~~
-import {...} from '/dep2-2be5.mjs';
-import {...} from '/dep3-3c6f.mjs';
-```
 
-::left::
+```js
+- import {...} from '/dep2-3c4d.mjs';
+- import {...} from '/dep3-d4e5.mjs';
++ import {...} from '/dep2-2be5.mjs';
++ import {...} from '/dep3-3c6f.mjs';
+```
 
 ![caching-module-dependency-graph-before](/caching-module-dependency-graph-before-b10a36a36e.svg)
 
 ::right::
 
-<div v-click=1>
+<v-click>
+
+**when making a patch in `vendor.mjs`** <span text-2xl>**, 80% caches are invalid 😨**</span>
 
 ![caching-module-dependency-graph-after](/caching-module-dependency-graph-after-b6afbdd237.svg)
 
-</div>
+</v-click>
 
 
 ---
