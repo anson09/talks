@@ -626,7 +626,7 @@ Cons: If an established connection is not used quickly (within 10 seconds on Chr
 
 ## prefetch
 
-**low priority**, executed as the browser sees fit, which is used for improving the load time of subsequent pages, such as you can apply the prefetch directive during the authentication of a use
+**lowest priority**, executed as the browser sees fit, which is used for improving the load time of subsequent pages, such as you can apply the prefetch directive during the authentication of a use
 
 [speed up 30% TTI in NETFLIX](https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY1ZjRiZjQ2ZTUyYjMxZDliNjI0OWY3MzA5YWQwMzM4NDAwNjgwY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTY1MzQ3MjI0MTMwOTI0NDkxOTEiLCJlbWFpbCI6ImZpbmFsc29uZzZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTY5OTE3NDM4NiwibmFtZSI6ImFuc29uIC53IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lDNGJiVEhLcVIzSERDbnBkRnVnMndfbi13V0VrSHFaemt1cHhpc0FWVzI5az1zOTYtYyIsImdpdmVuX25hbWUiOiJhbnNvbiIsImZhbWlseV9uYW1lIjoiLnciLCJsb2NhbGUiOiJlbiIsImlhdCI6MTY5OTE3NDY4NiwiZXhwIjoxNjk5MTc4Mjg2LCJqdGkiOiIzOWNhM2Y1NDBhOGY0YTZhZDE2ODRhNTYwZjlmMDhmN2RiN2E4NDNlIn0.iwGAZpy0_20xzs6s5zt4TfjXkcNBsdHF783CU6eVyMkfa-xmPa6wA8mYIUXLwISYdT4h3Web7BQV9bKh-iho_uwZKC-8S3yj5fb9tuDib037c__0D5kvpv4m7blR-wlSlHt0tlezNfBf-Lylml4L5Vut-xqFsilXEQHwUMawdPiqVY0DTNrDAZ3Iil0Q8dEvba56j-FCJqY-abnUsqVRFpta-kpFUKh6gesjYRcTXUcBbv-k2pHPJ8DVpAvvUa4O1XQATV6-aMBMp-DwNaji1wBAyo80i4U4e26Md4IkxFKztXjqWNXqJKFhgmWiHbh2i8zPhvdO7XtTF8iCpe6jpQ:~:text=Prefetching%20HTML%2C%20CSS%20and%20JavaScript%20(React)%20reduced%20Time%2Dto%2DInteractive%20by%2030%25%20for%20future%20navigations)
 
@@ -648,7 +648,7 @@ layout: two-cols
 
 ## preload
 
-Preload is a declarative fetch, and it’s **mandatory** for the browsers
+Preload is a declarative fetch, and it’s **mandatory** for the browsers, priority depends on the value of the `as` attribute
 
 works best on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) in current page, such as fonts, css, or critical javascript
 
