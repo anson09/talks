@@ -1,4 +1,4 @@
 cd Performance-Optimizing
-npm install
+npm ci
 npm run build
 cd ..

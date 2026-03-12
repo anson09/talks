@@ -1,7 +1,7 @@
 ---
 theme: dracula
 title: Performance Optimizing
-titleTemplate: '%s'
+titleTemplate: "%s"
 favicon: /logo-256.png
 transition: slide-left
 hideInToc: true
@@ -13,7 +13,6 @@ hideInToc: true
 <p class="author">🥸 Author: Anson, speaker from futu</p>
 <sub>online slide: <a>https://talks.anson.ltd/performance-optimizing/</a></sub>
 </div>
-
 
 <style>
 h1 {
@@ -42,19 +41,18 @@ hideInToc: true
 
 <Toc columns="2" class="gap-20" maxDepth="1"/>
 
-
 ---
 layout: section
 ---
 
 # Scope Hoisting
 
-
 ---
 
 Let's pack 3 files, See what happened.
 
 `index.js`
+
 ```js
 import "./lib";
 function add() {
@@ -66,23 +64,25 @@ add();
 <v-click>
 
 `lib.js`
+
 ```js
-import { add } from './sublib';
+import { add } from "./sublib";
 add();
 ```
+
 </v-click>
 
 <v-click>
 
 `sublib.js`
+
 ```js
 export function add() {
-  console.log('sublib add');
+  console.log("sublib add");
 }
 ```
 
 </v-click>
-
 
 ---
 
@@ -91,127 +91,144 @@ First pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
 `npx webpack index.js bundle.js`
 
 ```js {0-66|67-82|83-92|93-104} {maxHeight:'350px'}
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/******/ (function (modules) {
+  // webpackBootstrap
+  /******/ // The module cache
+  /******/ var installedModules = {};
+  /******/
+  /******/ // The require function
+  /******/ function __webpack_require__(moduleId) {
+    /******/
+    /******/ // Check if module is in cache
+    /******/ if (installedModules[moduleId]) {
+      /******/ return installedModules[moduleId].exports;
+      /******/
+    }
+    /******/ // Create a new module (and put it into the cache)
+    /******/ var module = (installedModules[moduleId] = {
+      /******/ i: moduleId,
+      /******/ l: false,
+      /******/ exports: {},
+      /******/
+    });
+    /******/
+    /******/ // Execute the module function
+    /******/ modules[moduleId].call(
+      module.exports,
+      module,
+      module.exports,
+      __webpack_require__,
+    );
+    /******/
+    /******/ // Flag the module as loaded
+    /******/ module.l = true;
+    /******/
+    /******/ // Return the exports of the module
+    /******/ return module.exports;
+    /******/
+  }
+  /******/
+  /******/
+  /******/ // expose the modules object (__webpack_modules__)
+  /******/ __webpack_require__.m = modules;
+  /******/
+  /******/ // expose the module cache
+  /******/ __webpack_require__.c = installedModules;
+  /******/
+  /******/ // define getter function for harmony exports
+  /******/ __webpack_require__.d = function (exports, name, getter) {
+    /******/ if (!__webpack_require__.o(exports, name)) {
+      /******/ Object.defineProperty(exports, name, {
+        /******/ configurable: false,
+        /******/ enumerable: true,
+        /******/ get: getter,
+        /******/
+      });
+      /******/
+    }
+    /******/
+  };
+  /******/
+  /******/ // getDefaultExport function for compatibility with non-harmony modules
+  /******/ __webpack_require__.n = function (module) {
+    /******/ var getter =
+      module && module.__esModule
+        ? /******/ function getDefault() {
+            return module["default"];
+          }
+        : /******/ function getModuleExports() {
+            return module;
+          };
+    /******/ __webpack_require__.d(getter, "a", getter);
+    /******/ return getter;
+    /******/
+  };
+  /******/
+  /******/ // Object.prototype.hasOwnProperty.call
+  /******/ __webpack_require__.o = function (object, property) {
+    return Object.prototype.hasOwnProperty.call(object, property);
+  };
+  /******/
+  /******/ // __webpack_public_path__
+  /******/ __webpack_require__.p = "";
+  /******/
+  /******/ // Load entry module and return exports
+  /******/ return __webpack_require__((__webpack_require__.s = 0));
+  /******/
+})(
+  /************************************************************************/
+  /******/ [
+    /* 0 */
+    /***/ function (module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+      Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+      /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib__ =
+        __webpack_require__(1);
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib__ = __webpack_require__(1);
+      function add() {
+        console.log("index add");
+      }
 
+      add();
 
-function add() {
-  console.log("index add");
-}
+      /***/
+    },
+    /* 1 */
+    /***/ function (module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+      /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sublib__ =
+        __webpack_require__(2);
 
-add();
+      __WEBPACK_IMPORTED_MODULE_0__sublib__["a" /* add */]();
 
+      /***/
+    },
+    /* 2 */
+    /***/ function (module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+      /* harmony export (immutable) */ __webpack_exports__["a"] = add;
+      function add() {
+        console.log("sublib add");
+      }
 
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sublib__ = __webpack_require__(2);
-
-__WEBPACK_IMPORTED_MODULE_0__sublib__["a" /* add */]();
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = add;
-function add() {
-  console.log('sublib add');
-}
-
-
-/***/ })
-/******/ ]);
-
+      /***/
+    },
+    /******/
+  ],
+);
 ```
 
 **💡 wrapping each module in a function, which is called when the module is imported**
-
 
 ---
 
 Then pack with rollup@4.0.0 <twemoji-grinning-face/>
 
-
-
 `npx rollup index.js`
 
 ```js
 function add$1() {
-  console.log('sublib add');
+  console.log("sublib add");
 }
 
 add$1();
@@ -225,20 +242,17 @@ add();
 
 **💡 the top-level variables of each module are renamed to ensure they are unique**
 
-
 ---
 
 Last pack with parcel@2.0.0 <twemoji-grinning-squinting-face />
 
-
 `npx parcel build index.js --no-source-maps`
 
 ```js
-console.log("sublib add"),console.log("index add");
+(console.log("sublib add"), console.log("index add"));
 ```
 
 **💡 collaborating with tree-shaking futher**
-
 
 ---
 layout: two-cols
@@ -250,7 +264,7 @@ layout: two-cols
 - Separate isolated scope
 - Side effects run at the expected time
 - HMR
-- Code which can't be statically analyzed 
+- Code which can't be statically analyzed
 
 ::right::
 
@@ -261,7 +275,6 @@ layout: two-cols
 - Download size
 - Runtime performance without object lookups
 
-
 ---
 
 ## Side Effects
@@ -270,15 +283,17 @@ layout: two-cols
 <div>
 
 `app.js`
+
 ```js
-import {add} from 'math';
+import { add } from "math";
 console.log(add(2, 3));
 ```
 
 `node_modules/math/index.js:`
+
 ```js {3|all}
-export {add} from './add.js';
-export {multiply} from './multiply.js';
+export { add } from "./add.js";
+export { multiply } from "./multiply.js";
 let loaded = Date.now();
 export function elapsed() {
   return Date.now() - loaded;
@@ -286,6 +301,7 @@ export function elapsed() {
 ```
 
 `node_modules/math/package.json:`
+
 ```js{all|3}
 {
   "name": "math"
@@ -297,6 +313,7 @@ export function elapsed() {
 <div>
 
 **WHEN?**
+
 - DOM manipulation
 - Log Something
 - Gloabl variable assignment
@@ -307,13 +324,11 @@ export function elapsed() {
 </div>
 </div>
 
-
 ---
 layout: section
 ---
 
 # Cascading Cache
-
 
 ---
 
@@ -336,12 +351,12 @@ But there is a problem ⚠️
 
 </div>
 
-
 ---
 layout: two-cols
 ---
 
 `dep2.mjs`/`dep3.mjs` 👇🏼
+
 ```js
 - import {...} from '/vendor-5e6f.mjs';
 + import {...} from '/vendor-d4a1.mjs';
@@ -368,7 +383,6 @@ layout: two-cols
 
 </v-click>
 
-
 ---
 
 **Best Solution - Import Maps**
@@ -378,6 +392,7 @@ layout: two-cols
 <div>
 
 Code in bunlde references `/vendor.mjs` but loads `/vendor-5e6f.mjs`.
+
 ```js
 import {...} from '/vendor.mjs';
 ```
@@ -385,6 +400,7 @@ import {...} from '/vendor.mjs';
 <v-click>
 
 When bundle updates, just change the import map 🤩
+
 ```js
 <script type="importmap">
 {
@@ -398,6 +414,7 @@ When bundle updates, just change the import map 🤩
 }
 </script>
 ```
+
 </v-click>
 
 <v-click>
@@ -414,26 +431,25 @@ Cache is efficient now 🚀
 
 </div>
 
-
 ---
 
 <div class="grid grid-cols-[1fr_40%] gap-10">
 <div>
 
-
 **Compatible Solution 1- Service Worker**
 
 Map update with service worker version
+
 ```js
 const importMap = {
-  '/main.mjs': '/main-1a2b.mjs',
-  '/dep1.mjs': '/dep1-b2c3.mjs',
-  '/dep2.mjs': '/dep2-3c4d.mjs',
-  '/dep3.mjs': '/dep3-d4e5.mjs',
-  '/vendor.mjs': '/vendor-5e6f.mjs',
+  "/main.mjs": "/main-1a2b.mjs",
+  "/dep1.mjs": "/dep1-b2c3.mjs",
+  "/dep2.mjs": "/dep2-3c4d.mjs",
+  "/dep3.mjs": "/dep3-d4e5.mjs",
+  "/vendor.mjs": "/vendor-5e6f.mjs",
 };
 
-addEventListener('fetch', (event) => {
+addEventListener("fetch", (event) => {
   const oldPath = new URL(event.request.url, location).pathname;
   if (importMap.hasOwnProperty(oldPath)) {
     const newPath = importMap[oldPath];
@@ -441,6 +457,7 @@ addEventListener('fetch', (event) => {
   }
 });
 ```
+
 <v-click>
 
 Before service worker has installed and activated, the un-revisioned files will be requested on the first load
@@ -457,13 +474,11 @@ Uses a manifest in each entry bundle, that's what kinds of bundler do now
 </div>
 </div>
 
-
 ---
 layout: section
 ---
 
 # Font
-
 
 ---
 
@@ -495,30 +510,26 @@ FCP/LCP - Delay text rendering
 
 CLS - Layout shift
 
-
 <!-- <video controls autoplay loop >
   <source src="/overlap.mp4" type="video/mp4">
 </video> -->
 
-
 ![overlap](/overlap.png)
 
-
 </div>
 </div>
-
 
 ---
 
 ## font-display
 
-| Value | Block period | Swap period |
-|-------|--------------|-------------|
-| Auto | Varies by browser |	Varies by browser |
-| Block | 2-3 seconds | Infinite |
-| Swap | 0ms | Infinite |
-| Fallback | 100ms | 3 seconds |
-| Optional | 100ms | None |
+| Value    | Block period      | Swap period       |
+| -------- | ----------------- | ----------------- |
+| Auto     | Varies by browser | Varies by browser |
+| Block    | 2-3 seconds       | Infinite          |
+| Swap     | 0ms               | Infinite          |
+| Fallback | 100ms             | 3 seconds         |
+| Optional | 100ms             | None              |
 
 <div v-click>
 
@@ -530,58 +541,58 @@ CLS - Layout shift
 
 </div>
 
-
 ---
 
 ## More Optimizing Methods
 
 - Inline font declarations
+
 ```html
 <head>
   <style>
     @font-face {
-        font-family: "Open Sans";
-        src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
+      font-family: "Open Sans";
+      src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
     }
     body {
-        font-family: "Open Sans";
+      font-family: "Open Sans";
     }
   </style>
 </head>
 ```
 
 - PreConnect/PreLoad
+
 ```html
 <head>
-  <link rel="preconnect" href="https://fonts.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.com" crossorigin />
 </head>
 ```
-
 
 ---
 
 - WOFF2, 30% smaller than WOFF
-- subset fonts*
+- subset fonts\*
+
 ```css
 @font-face {
-    font-family: "Open Sans";
-    src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
-    unicode-range: U+0025-00FF;
+  font-family: "Open Sans";
+  src: url("/fonts/OpenSans-Regular-webfont.woff2") format("woff2");
+  unicode-range: U+0025-00FF;
 }
 ```
 
 - size-adjust
+
 ```css
 @font-face {
   font-family: "Adjusted Typeface";
   size-adjust: 150%;
-  src: url(some/path/to/typeface.woff2) format('woff2');
+  src: url(some/path/to/typeface.woff2) format("woff2");
 }
-
 ```
 
 <p class="absolute bottom-0 text-xs">* subset font can't used in preload</p>
-
 
 ---
 layout: section
@@ -589,15 +600,13 @@ layout: section
 
 # Pre-xxx
 
-
 ---
 layout: intro
 ---
 
-*As a website owner, you are the one who knows which resources are most crucial and what the actual user journey on your site is. And to improve the overall performance, perceived speed, and user experience of your website, you could use that knowledge to help the browsers load your pages faster.* 
+_As a website owner, you are the one who knows which resources are most crucial and what the actual user journey on your site is. And to improve the overall performance, perceived speed, and user experience of your website, you could use that knowledge to help the browsers load your pages faster._
 
-*That’s where the resource hints come in.*
-
+_That’s where the resource hints come in._
 
 ---
 
@@ -606,14 +615,12 @@ layout: intro
 [speed up 100–500 ms according to Google](https://web.dev/articles/preconnect-and-dns-prefetch#:~:text=You%20can%20speed%20up%20the%20load%20time%20by%20100%E2%80%93500%20ms%20by%20establishing%20early%20connections%20to%20important%20third%2Dparty%20origins)
 
 ```html
-<link rel="preconnect" href="https://example.com">
+<link rel="preconnect" href="https://example.com" />
 ```
 
 Performs DNS lookup, TCP handshake, and [TLS](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) negotiation with the origin specified in the href attribute
 
-
 <img alt="[with-preconnect" src='/with-preconnect.png' class="w-1/2"/>
-
 
 <v-click>
 
@@ -621,17 +628,15 @@ Cons: If an established connection is not used quickly (within 10 seconds on Chr
 
 </v-click>
 
-
 ---
 
 ## prefetch
 
 **lowest priority**, executed as the browser sees fit, which is used for improving the load time of subsequent pages, such as you can apply the prefetch directive during the authentication of a use
 
-[speed up 30% TTI in NETFLIX](https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY1ZjRiZjQ2ZTUyYjMxZDliNjI0OWY3MzA5YWQwMzM4NDAwNjgwY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTY1MzQ3MjI0MTMwOTI0NDkxOTEiLCJlbWFpbCI6ImZpbmFsc29uZzZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTY5OTE3NDM4NiwibmFtZSI6ImFuc29uIC53IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lDNGJiVEhLcVIzSERDbnBkRnVnMndfbi13V0VrSHFaemt1cHhpc0FWVzI5az1zOTYtYyIsImdpdmVuX25hbWUiOiJhbnNvbiIsImZhbWlseV9uYW1lIjoiLnciLCJsb2NhbGUiOiJlbiIsImlhdCI6MTY5OTE3NDY4NiwiZXhwIjoxNjk5MTc4Mjg2LCJqdGkiOiIzOWNhM2Y1NDBhOGY0YTZhZDE2ODRhNTYwZjlmMDhmN2RiN2E4NDNlIn0.iwGAZpy0_20xzs6s5zt4TfjXkcNBsdHF783CU6eVyMkfa-xmPa6wA8mYIUXLwISYdT4h3Web7BQV9bKh-iho_uwZKC-8S3yj5fb9tuDib037c__0D5kvpv4m7blR-wlSlHt0tlezNfBf-Lylml4L5Vut-xqFsilXEQHwUMawdPiqVY0DTNrDAZ3Iil0Q8dEvba56j-FCJqY-abnUsqVRFpta-kpFUKh6gesjYRcTXUcBbv-k2pHPJ8DVpAvvUa4O1XQATV6-aMBMp-DwNaji1wBAyo80i4U4e26Md4IkxFKztXjqWNXqJKFhgmWiHbh2i8zPhvdO7XtTF8iCpe6jpQ:~:text=Prefetching%20HTML%2C%20CSS%20and%20JavaScript%20(React)%20reduced%20Time%2Dto%2DInteractive%20by%2030%25%20for%20future%20navigations)
+[speed up 30% TTI in NETFLIX](<https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY1ZjRiZjQ2ZTUyYjMxZDliNjI0OWY3MzA5YWQwMzM4NDAwNjgwY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTY1MzQ3MjI0MTMwOTI0NDkxOTEiLCJlbWFpbCI6ImZpbmFsc29uZzZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTY5OTE3NDM4NiwibmFtZSI6ImFuc29uIC53IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lDNGJiVEhLcVIzSERDbnBkRnVnMndfbi13V0VrSHFaemt1cHhpc0FWVzI5az1zOTYtYyIsImdpdmVuX25hbWUiOiJhbnNvbiIsImZhbWlseV9uYW1lIjoiLnciLCJsb2NhbGUiOiJlbiIsImlhdCI6MTY5OTE3NDY4NiwiZXhwIjoxNjk5MTc4Mjg2LCJqdGkiOiIzOWNhM2Y1NDBhOGY0YTZhZDE2ODRhNTYwZjlmMDhmN2RiN2E4NDNlIn0.iwGAZpy0_20xzs6s5zt4TfjXkcNBsdHF783CU6eVyMkfa-xmPa6wA8mYIUXLwISYdT4h3Web7BQV9bKh-iho_uwZKC-8S3yj5fb9tuDib037c__0D5kvpv4m7blR-wlSlHt0tlezNfBf-Lylml4L5Vut-xqFsilXEQHwUMawdPiqVY0DTNrDAZ3Iil0Q8dEvba56j-FCJqY-abnUsqVRFpta-kpFUKh6gesjYRcTXUcBbv-k2pHPJ8DVpAvvUa4O1XQATV6-aMBMp-DwNaji1wBAyo80i4U4e26Md4IkxFKztXjqWNXqJKFhgmWiHbh2i8zPhvdO7XtTF8iCpe6jpQ:~:text=Prefetching%20HTML%2C%20CSS%20and%20JavaScript%20(React)%20reduced%20Time%2Dto%2DInteractive%20by%2030%25%20for%20future%20navigations>)
 
 **take two request**, the second use preftech cache of the first
-
 
 <img alt="prefetch-cache" src='/prefetch-cache.png' class="w-80%"/>
 
@@ -640,7 +645,6 @@ Cons: If an established connection is not used quickly (within 10 seconds on Chr
 Cons: might increase the data consumption
 
 </v-click>
-
 
 ---
 layout: two-cols
@@ -653,7 +657,7 @@ Preload is a declarative fetch, and it’s **mandatory** for the browsers, prior
 works best on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) in current page, such as fonts, css, or critical javascript
 
 ```html
-<link rel="preload" as="image" href="header-logo.svg">
+<link rel="preload" as="image" href="header-logo.svg" />
 ```
 
 **only take one request**, warning if not used in 3 seconds
@@ -661,7 +665,6 @@ works best on resources that are part of the [critical rendering path](https://d
 ::right::
 
 <img alt="value-of-as" src='/value-of-as.png' class="w-3/4 m-auto"/>
-
 
 ---
 layout: two-cols
@@ -674,13 +677,11 @@ layout: two-cols
 **preload after 🚀:**
 ![preload-after](/preload-after.png)
 
-
 ---
 layout: section
 ---
 
 # requestIdleCallback
-
 
 ---
 
@@ -696,7 +697,7 @@ layout: section
 
 <v-click>
 
-But they are not really idle schedule which suitable for **non-critical** tasks, such as: 
+But they are not really idle schedule which suitable for **non-critical** tasks, such as:
 
 - Analytics
 - Logging
@@ -709,7 +710,6 @@ Scheduling non-essential work yourself is very difficult to do. It’s impossibl
 
 </v-click>
 
-
 ---
 
 <div class="grid grid-cols-2 gap-2">
@@ -720,6 +720,7 @@ Scheduling non-essential work yourself is very difficult to do. It’s impossibl
 
 rest time of (**16.67ms** in 60fps) each frame
 <img  alt="ric-busy" src='/ric-busy.webp' class="m-auto"/>
+
 </div>
 <div>
 
@@ -733,7 +734,6 @@ at most **50ms** when no after render work
 </div>
 </div>
 
-
 ---
 
 ## Code Example
@@ -744,25 +744,26 @@ let handler = null;
 // When browser is busy, rIC won't be called, using timeout to force trigger
 handler = requestIdleCallback(myNonEssentialWork, { timeout: 2000 });
 
-function myNonEssentialWork (deadline) {
+function myNonEssentialWork(deadline) {
   // deadline.timeRemaining() is the amount of time left in the current idle period
   // If the callback function is executed due to a timeout，deadline.didTimeout is true
-  while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && tasks.length > 0) {
-       doWorkIfNeeded();
-    }
+  while (
+    (deadline.timeRemaining() > 0 || deadline.didTimeout) &&
+    tasks.length > 0
+  ) {
+    doWorkIfNeeded();
+  }
   if (tasks.length > 0) {
     handler = requestIdleCallback(myNonEssentialWork);
   }
 }
-
 ```
 
 cancel the callback
+
 ```js
 cancelIdleCallback(handle);
-
 ```
-
 
 ---
 
@@ -780,13 +781,11 @@ cancelIdleCallback(handle);
 - Tasks which could take an unpredictable amount of time
 - Overrun the deadline
 
-
 ---
 layout: section
 ---
 
 # Image
-
 
 ---
 
@@ -802,10 +801,9 @@ layout: section
 
 - **webp**: supports both **lossy and lossless** compression as well as **animation and transparency**，offers better compression for the same quality as jpegs and pngs
 - heic/heif: supports both **lossy and lossless** compression, **better compression** than webp, jpeg, png and gif, but **only apple system** because it is complex and expensive to license
-- avif:  **lossy** image format based on the AV1 video format.,  offers **significant compression** and quality improvements over jpeg and webp
+- avif: **lossy** image format based on the AV1 video format., offers **significant compression** and quality improvements over jpeg and webp
 
 </v-click>
-
 
 ---
 
@@ -824,16 +822,15 @@ layout: section
 
 ```html
 <picture>
-  <source type="image/heic" srcset="/image.heic">
-  <source type="image/avif" srcset="/image.avif">
-  <source type="image/webp" srcset="/image.webp">
-  <source type="image/jpeg" srcset="/image.jpeg">
-  <img src="/image.jpeg" alt="Description">
+  <source type="image/heic" srcset="/image.heic" />
+  <source type="image/avif" srcset="/image.avif" />
+  <source type="image/webp" srcset="/image.webp" />
+  <source type="image/jpeg" srcset="/image.jpeg" />
+  <img src="/image.jpeg" alt="Description" />
 </picture>
 ```
 
 </v-click>
-
 
 ---
 layout: section
@@ -841,13 +838,11 @@ layout: section
 
 # Compositing Layer
 
-
 ---
 layout: intro
 ---
 
-*Painting can break the elements in the layout tree into layers. Promoting content into layers on the GPU (instead of the main thread on the CPU) improves paint and repaint performance. There are specific properties and elements that instantiate a layer, including \<video\> and \<canvas\>, and any element which has the CSS properties of opacity, a 3D transform, will-change, and a few others. These nodes will be painted onto their own layer, along with their descendants, unless a descendant necessitates its own layer for one (or more) of the above reasons.*
-
+_Painting can break the elements in the layout tree into layers. Promoting content into layers on the GPU (instead of the main thread on the CPU) improves paint and repaint performance. There are specific properties and elements that instantiate a layer, including \<video\> and \<canvas\>, and any element which has the CSS properties of opacity, a 3D transform, will-change, and a few others. These nodes will be painted onto their own layer, along with their descendants, unless a descendant necessitates its own layer for one (or more) of the above reasons._
 
 ---
 
@@ -878,6 +873,7 @@ layout: intro
   </style>
 </html>
 ```
+
 </div>
 <div>
 
@@ -885,7 +881,6 @@ layout: intro
 
 </div>
 </div>
-
 
 ---
 
@@ -916,6 +911,7 @@ layout: intro
   </style>
 </html>
 ```
+
 </div>
 <div>
 
@@ -923,7 +919,6 @@ layout: intro
 
 </div>
 </div>
-
 
 ---
 layout: quote
@@ -940,7 +935,6 @@ Reference Links:
 > https://nitropack.io/blog/post/resource-hints-performance-optimization
 
 > https://developer.chrome.com/blog/using-requestidlecallback/
-
 
 ---
 layout: end
