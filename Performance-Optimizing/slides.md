@@ -80,6 +80,9 @@ add();
 export function add() {
   console.log("sublib add");
 }
+export function sub() {
+  console.log("sublib sub");
+}
 ```
 
 </v-click>
@@ -90,7 +93,7 @@ First pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
 
 `npx webpack index.js bundle.js`
 
-```js {0-66|67-82|83-92|93-104} {maxHeight:'350px'}
+```js {0-87|88-101|102-111|112-128} {maxHeight:'350px'}
 /******/ (function (modules) {
   // webpackBootstrap
   /******/ // The module cache
@@ -188,7 +191,6 @@ First pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
       function add() {
         console.log("index add");
       }
-
       add();
 
       /***/
@@ -207,8 +209,12 @@ First pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
     /***/ function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       /* harmony export (immutable) */ __webpack_exports__["a"] = add;
+      /* unused harmony export sub */
       function add() {
         console.log("sublib add");
+      }
+      function sub() {
+        console.log("sublib sub");
       }
 
       /***/
@@ -240,6 +246,7 @@ function add() {
 add();
 ```
 
+**💡 scoped hoisting + tree-shaking**  
 **💡 the top-level variables of each module are renamed to ensure they are unique**
 
 ---
@@ -252,7 +259,7 @@ Last pack with parcel@2.0.0 <twemoji-grinning-squinting-face />
 (console.log("sublib add"), console.log("index add"));
 ```
 
-**💡 collaborating with tree-shaking futher**
+**💡 minimizing the size of the bundle further**
 
 ---
 layout: two-cols
