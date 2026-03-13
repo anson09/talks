@@ -364,6 +364,8 @@ layout: two-cols
 
 `dep2.mjs`/`dep3.mjs` 👇🏼
 
+<div class="pr-6">
+
 ```js
 - import {...} from '/vendor-5e6f.mjs';
 + import {...} from '/vendor-d4a1.mjs';
@@ -380,7 +382,11 @@ layout: two-cols
 
 ![caching-module-dependency-graph-before](/caching-module-dependency-graph-before-b10a36a36e.svg)
 
+</div>
+
 ::right::
+
+<div class="pl-6">
 
 <v-click>
 
@@ -389,6 +395,8 @@ layout: two-cols
 ![caching-module-dependency-graph-after](/caching-module-dependency-graph-after-b6afbdd237.svg)
 
 </v-click>
+
+</div>
 
 ---
 
@@ -476,7 +484,7 @@ Before service worker has installed and activated, the un-revisioned files will 
 
 **Compatible Solution 2 - Custom Script Loader**
 
-Uses a manifest in each entry bundle, that's what kinds of bundler do now
+Uses a manifest in each entry bundle
 
 </div>
 </div>
