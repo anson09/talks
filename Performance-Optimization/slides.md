@@ -448,10 +448,7 @@ Cache is efficient now 🚀
 
 ---
 
-<div class="grid grid-cols-[1fr_40%] gap-10">
-<div>
-
-**Compatible Solution 1- Service Worker**
+**Compatible Solution - Service Worker**
 
 Map update with service worker version
 
@@ -478,16 +475,6 @@ addEventListener("fetch", (event) => {
 Before the service worker is installed and activated, the un-revisioned files are requested on the first load
 
 </v-click>
-
-</div>
-<div v-click>
-
-**Compatible Solution 2 - Custom Script Loader**
-
-Uses a manifest in each entry bundle
-
-</div>
-</div>
 
 ---
 layout: section
@@ -517,7 +504,7 @@ PERIOD 3️⃣. **FAILURE**
 Render fallback, won't update
 
 </div>
-<div v-click>
+<div v-click="1">
 
 **Performance Impact**
 
@@ -525,11 +512,16 @@ FCP/LCP - Delay text rendering
 
 CLS - Layout shift
 
-<!-- <video controls autoplay loop >
-  <source src="/overlap.mp4" type="video/mp4">
-</video> -->
-
-![overlap](/overlap.png)
+<v-switch>
+  <template #1>
+    <video controls autoplay loop >
+      <source src="/overlap.mp4" type="video/mp4">
+    </video>
+  </template>
+  <template #2>
+    <img alt="overlap" src="/overlap.png" />
+  </template>
+</v-switch>
 
 </div>
 </div>
@@ -548,7 +540,7 @@ CLS - Layout shift
 
 <div v-click>
 
-**default behavior for web fonts 💄: block**
+**default behavior for web fonts 💄: auto (often block-like)**
 
 **better for FCP/LCP 🚀: swap**
 
@@ -667,7 +659,7 @@ layout: two-cols
 
 ## preload
 
-Preload is a declarative fetch, and it’s **mandatory** for browsers; priority depends on the value of the `as` attribute
+Preload is a declarative fetch, and it’s **mandatory** for browsers; priority depends on the value of the `as` attribute (and browser scheduling)
 
 Works best on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) on the current page, such as fonts, CSS, or critical JavaScript
 
