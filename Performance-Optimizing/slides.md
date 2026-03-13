@@ -1,6 +1,6 @@
 ---
 theme: dracula
-title: Performance Optimizing
+title: Performance Optimization
 titleTemplate: "%s"
 favicon: /logo-256.png
 transition: slide-left
@@ -49,7 +49,7 @@ layout: section
 
 ---
 
-Let's pack 3 files, See what happened.
+Let's pack 3 files and see what happens.
 
 `index.js`
 
@@ -89,7 +89,7 @@ export function sub() {
 
 ---
 
-First pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
+First, pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
 
 `npx webpack index.js bundle.js`
 
@@ -228,7 +228,7 @@ First pack with webpack@3.0.0 <twemoji-grinning-face-with-sweat />
 
 ---
 
-Then pack with rollup@4.0.0 <twemoji-grinning-face/>
+Then, pack with rollup@4.0.0 <twemoji-grinning-face/>
 
 `npx rollup index.js`
 
@@ -251,7 +251,7 @@ add();
 
 ---
 
-Last pack with parcel@2.0.0 <twemoji-grinning-squinting-face />
+Lastly, pack with parcel@2.0.0 <twemoji-grinning-squinting-face />
 
 `npx parcel build index.js --no-source-maps`
 
@@ -323,7 +323,7 @@ export function elapsed() {
 
 - DOM manipulation
 - Log Something
-- Gloabl variable assignment
+- Global variable assignment
 - And so on ...
 
 **sideEffects types: false | string | array\<string\>**
@@ -339,7 +339,7 @@ layout: section
 
 ---
 
-## What's Good Cache Strategy
+## What's a Good Caching Strategy
 
 <div v-click class="mt-4">
 
@@ -348,7 +348,7 @@ layout: section
 
 👉 `filename: '[name]-[contenthash].js'`
 
-- Code splitting such as making node_modules to splited vendor chunk
+- Code splitting, such as splitting `node_modules` into a vendor chunk
 
 </div>
 
@@ -390,7 +390,7 @@ layout: two-cols
 
 <v-click>
 
-**when making a patch in `vendor.mjs`** <span text-2xl>**, 80% caches are invalid 😨**</span>
+**when making a patch in `vendor.mjs`** <span text-2xl>**, 80% of the cache is invalidated 😨**</span>
 
 ![caching-module-dependency-graph-after](/caching-module-dependency-graph-after-b6afbdd237.svg)
 
@@ -406,7 +406,7 @@ layout: two-cols
 
 <div>
 
-Code in bunlde references `/vendor.mjs` but loads `/vendor-5e6f.mjs`.
+Code in bundle references `/vendor.mjs` but loads `/vendor-5e6f.mjs`.
 
 ```js
 import {...} from '/vendor.mjs';
@@ -475,7 +475,7 @@ addEventListener("fetch", (event) => {
 
 <v-click>
 
-Before service worker has installed and activated, the un-revisioned files will be requested on the first load
+Before the service worker is installed and activated, the un-revisioned files are requested on the first load
 
 </v-click>
 
@@ -500,17 +500,17 @@ layout: section
 <div class="grid grid-cols-[1fr_40%] gap-2">
 <div>
 
-**Font render period**
+**Font rendering period**
 
 If the font face is not loaded
 
 PERIOD 1️⃣. **BLOCK**
 
-Render with an **invisible** fallback font face, waiting for updating
+Render with an **invisible** fallback font face while waiting for it to update
 
 PERIOD 2️⃣. **SWAP**
 
-Render with a fallback font face, waiting for updating
+Render with a fallback font face while waiting for it to update
 
 PERIOD 3️⃣. **FAILURE**
 
@@ -519,7 +519,7 @@ Render fallback, won't update
 </div>
 <div v-click>
 
-**Perfomance Impact**
+**Performance Impact**
 
 FCP/LCP - Delay text rendering
 
@@ -548,7 +548,7 @@ CLS - Layout shift
 
 <div v-click>
 
-**first look in web font 💄: block**
+**default behavior for web fonts 💄: block**
 
 **better for FCP/LCP 🚀: swap**
 
@@ -576,7 +576,7 @@ CLS - Layout shift
 </head>
 ```
 
-- PreConnect/PreLoad
+- preconnect/preload
 
 ```html
 <head>
@@ -587,7 +587,7 @@ CLS - Layout shift
 ---
 
 - WOFF2, 30% smaller than WOFF
-- subset fonts\*
+- Subset fonts\*
 
 ```css
 @font-face {
@@ -607,7 +607,7 @@ CLS - Layout shift
 }
 ```
 
-<p class="absolute bottom-0 text-xs">* subset font can't used in preload</p>
+<p class="absolute bottom-0 text-xs">* subset fonts can't be used in preload</p>
 
 ---
 layout: section
@@ -635,7 +635,7 @@ _That’s where the resource hints come in._
 
 Performs DNS lookup, TCP handshake, and [TLS](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/) negotiation with the origin specified in the href attribute
 
-<img alt="[with-preconnect" src='/with-preconnect.png' class="w-1/2"/>
+<img alt="with-preconnect" src='/with-preconnect.png' class="w-1/2"/>
 
 <v-click>
 
@@ -647,11 +647,11 @@ Cons: If an established connection is not used quickly (within 10 seconds on Chr
 
 ## prefetch
 
-**lowest priority**, executed as the browser sees fit, which is used for improving the load time of subsequent pages, such as you can apply the prefetch directive during the authentication of a use
+**lowest priority**, executed as the browser sees fit, used to improve the load time of subsequent pages, for example during user authentication flows
 
-[speed up 30% TTI in NETFLIX](<https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImY1ZjRiZjQ2ZTUyYjMxZDliNjI0OWY3MzA5YWQwMzM4NDAwNjgwY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTY1MzQ3MjI0MTMwOTI0NDkxOTEiLCJlbWFpbCI6ImZpbmFsc29uZzZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTY5OTE3NDM4NiwibmFtZSI6ImFuc29uIC53IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lDNGJiVEhLcVIzSERDbnBkRnVnMndfbi13V0VrSHFaemt1cHhpc0FWVzI5az1zOTYtYyIsImdpdmVuX25hbWUiOiJhbnNvbiIsImZhbWlseV9uYW1lIjoiLnciLCJsb2NhbGUiOiJlbiIsImlhdCI6MTY5OTE3NDY4NiwiZXhwIjoxNjk5MTc4Mjg2LCJqdGkiOiIzOWNhM2Y1NDBhOGY0YTZhZDE2ODRhNTYwZjlmMDhmN2RiN2E4NDNlIn0.iwGAZpy0_20xzs6s5zt4TfjXkcNBsdHF783CU6eVyMkfa-xmPa6wA8mYIUXLwISYdT4h3Web7BQV9bKh-iho_uwZKC-8S3yj5fb9tuDib037c__0D5kvpv4m7blR-wlSlHt0tlezNfBf-Lylml4L5Vut-xqFsilXEQHwUMawdPiqVY0DTNrDAZ3Iil0Q8dEvba56j-FCJqY-abnUsqVRFpta-kpFUKh6gesjYRcTXUcBbv-k2pHPJ8DVpAvvUa4O1XQATV6-aMBMp-DwNaji1wBAyo80i4U4e26Md4IkxFKztXjqWNXqJKFhgmWiHbh2i8zPhvdO7XtTF8iCpe6jpQ:~:text=Prefetching%20HTML%2C%20CSS%20and%20JavaScript%20(React)%20reduced%20Time%2Dto%2DInteractive%20by%2030%25%20for%20future%20navigations>)
+[speed up 30% TTI in Netflix](https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9)
 
-**take two request**, the second use preftech cache of the first
+**takes two requests**, and the second uses the prefetch cache from the first
 
 <img alt="prefetch-cache" src='/prefetch-cache.png' class="w-80%"/>
 
@@ -667,15 +667,15 @@ layout: two-cols
 
 ## preload
 
-Preload is a declarative fetch, and it’s **mandatory** for the browsers, priority depends on the value of the `as` attribute
+Preload is a declarative fetch, and it’s **mandatory** for browsers; priority depends on the value of the `as` attribute
 
-works best on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) in current page, such as fonts, css, or critical javascript
+Works best on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) on the current page, such as fonts, CSS, or critical JavaScript
 
 ```html
 <link rel="preload" as="image" href="header-logo.svg" />
 ```
 
-**only take one request**, warning if not used in 3 seconds
+**only takes one request**, with a warning if not used in 3 seconds
 
 ::right::
 
@@ -704,7 +704,7 @@ layout: section
 
 <v-click>
 
-- SetTimeout / SetInterval / postTask
+- setTimeout / setInterval / postTask
 - rAF
 - queueMicrotask
 
@@ -712,7 +712,7 @@ layout: section
 
 <v-click>
 
-But they are not really idle schedule which suitable for **non-critical** tasks, such as:
+But they are not true idle scheduling mechanisms suitable for **non-critical** tasks, such as:
 
 - Analytics
 - Logging
@@ -721,7 +721,7 @@ But they are not really idle schedule which suitable for **non-critical** tasks,
 
 More important works like **rendering** and **user interaction** will be blocked
 
-Scheduling non-essential work yourself is very difficult to do. It’s impossible to figure out exactly how much frame time remains because after requestAnimationFrame callbacks execute there are style calculations, layout, paint, and other browser internals that need to run
+Scheduling non-essential work yourself is very difficult. It’s impossible to figure out exactly how much frame time remains because, after `requestAnimationFrame` callbacks execute, there are style calculations, layout, paint, and other browser internals that still need to run
 
 </v-click>
 
@@ -733,7 +733,7 @@ Scheduling non-essential work yourself is very difficult to do. It’s impossibl
 
 **Free time at the end of a frame:**
 
-rest time of (**16.67ms** in 60fps) each frame
+remaining time of each frame (**16.67ms** at 60fps)
 <img  alt="ric-busy" src='/ric-busy.webp' class="m-auto"/>
 
 </div>
@@ -741,7 +741,7 @@ rest time of (**16.67ms** in 60fps) each frame
 
 **User is inactive:**
 
-at most **50ms** when no after render work
+at most **50ms** when there is no post-render work
 <img  alt="ric-idle" src='/ric-idle.png' class="m-auto"/>
 
 **100ms** is the maximum time human can feel the delay
@@ -756,7 +756,7 @@ at most **50ms** when no after render work
 ```js
 let handler = null;
 
-// When browser is busy, rIC won't be called, using timeout to force trigger
+// When the browser is busy, rIC won't be called, so use timeout to force a trigger
 handler = requestIdleCallback(myNonEssentialWork, { timeout: 2000 });
 
 function myNonEssentialWork(deadline) {
@@ -774,7 +774,7 @@ function myNonEssentialWork(deadline) {
 }
 ```
 
-cancel the callback
+Cancel the callback
 
 ```js
 cancelIdleCallback(handle);
@@ -807,16 +807,16 @@ layout: section
 ## Understand Format
 
 - jpeg/jpg: lossy image format, good for photos, but **does not support transparency or lossless compression**
-- png: lossless image format, much **larger** than jpegs or other lossy image formats, but **support transparency** and offer much **higher quality** for fine details
+- png: lossless image format, much **larger** than JPEGs or other lossy image formats, but **supports transparency** and offers much **higher quality** for fine details
 - gif: lossless compression and can be used for animations, up to 8 bits per pixel and a **maximum of 256 colors** from the 24-bit color space
 
 <v-click>
 
 **More Recommended:**
 
-- **webp**: supports both **lossy and lossless** compression as well as **animation and transparency**，offers better compression for the same quality as jpegs and pngs
-- heic/heif: supports both **lossy and lossless** compression, **better compression** than webp, jpeg, png and gif, but **only apple system** because it is complex and expensive to license
-- avif: **lossy** image format based on the AV1 video format., offers **significant compression** and quality improvements over jpeg and webp
+- **webp**: supports both **lossy and lossless** compression as well as **animation and transparency**, and offers better compression for the same quality as JPEGs and PNGs
+- heic/heif: supports both **lossy and lossless** compression, with **better compression** than WebP, JPEG, PNG, and GIF, but is mostly limited to the Apple ecosystem because it is complex and expensive to license
+- avif: a **lossy** image format based on the AV1 video format, offering **significant compression** and quality improvements over JPEG and WebP
 
 </v-click>
 
