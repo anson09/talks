@@ -1,11 +1,11 @@
 {
-	"name": "performance-optimizing",
+	"name": "performance-optimization",
 	"type": "module",
 	"private": true,
 	"scripts": {
 		"dev": "slidev --open",
-		"build": "slidev build --base /performance-optimizing/ --out ../dist/performance-optimizing",
-		"export": "slidev export --per-slide --output performance-optimizing.pdf",
+		"build": "slidev build --base /performance-optimization/ --out ../dist/performance-optimization",
+		"export": "slidev export --per-slide --output performance-optimization.pdf",
 		"fmt": "slidev format"
 	},
 	"dependencies": {

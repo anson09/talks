@@ -11,7 +11,7 @@ hideInToc: true
 
 <div class="absolute right-30px bottom-30px">
 <p class="author">🥸 Author: Anson, speaker from futu</p>
-<sub>online slide: <a>https://talks.anson.ltd/performance-optimizing/</a></sub>
+<sub>online slide: <a>https://talks.anson.ltd/performance-optimization/</a></sub>
 </div>
 
 <style>
