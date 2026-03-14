@@ -246,7 +246,7 @@ function add() {
 add();
 ```
 
-**💡 scoped hoisting + tree-shaking**  
+**💡 scope hoisting + tree-shaking**  
 **💡 the top-level variables of each module are renamed to ensure they are unique**
 
 ---
@@ -311,7 +311,7 @@ export function elapsed() {
 
 ```js{all|3}
 {
-  "name": "math"
+  "name": "math",
   "sideEffects": false
 }
 ```
@@ -322,7 +322,7 @@ export function elapsed() {
 **WHEN?**
 
 - DOM manipulation
-- Log Something
+- Log something
 - Global variable assignment
 - And so on ...
 
@@ -400,13 +400,13 @@ layout: two-cols
 
 ---
 
-**Best Solution - Import Maps**
+**Modern Option - Import Maps**
 
 <div class="grid grid-cols-[1fr_30%] gap-2">
 
 <div>
 
-Code in bundle references `/vendor.mjs` but loads `/vendor-5e6f.mjs`.
+In modern browsers with native ESM, code in bundle references `/vendor.mjs` but loads `/vendor-5e6f.mjs`.
 
 ```js
 import {...} from '/vendor.mjs';
@@ -465,7 +465,10 @@ addEventListener("fetch", (event) => {
   const oldPath = new URL(event.request.url, location).pathname;
   if (importMap.hasOwnProperty(oldPath)) {
     const newPath = importMap[oldPath];
-    event.respondWith(fetch(new Request(newPath, event.request)));
+    const newUrl = new URL(newPath, self.location.origin);
+    event.respondWith(
+      fetch(newUrl, { method: "GET", credentials: "same-origin" }),
+    );
   }
 });
 ```
@@ -487,21 +490,21 @@ layout: section
 <div class="grid grid-cols-[1fr_40%] gap-2">
 <div>
 
-**Font rendering period**
+**Font rendering timeline**
 
-If the font face is not loaded
+If the web font is not loaded
 
 PERIOD 1️⃣. **BLOCK**
 
-Render with an **invisible** fallback font face while waiting for it to update
+Render text as **invisible** (FOIT) while waiting for the web font to load
 
 PERIOD 2️⃣. **SWAP**
 
-Render with a fallback font face while waiting for it to update
+Render with a fallback font first, then swap to the web font when available
 
 PERIOD 3️⃣. **FAILURE**
 
-Render fallback, won't update
+Render with a fallback font and keep it (no swap)
 
 </div>
 <div v-click="1">
@@ -579,7 +582,7 @@ CLS - Layout shift
 ---
 
 - WOFF2, 30% smaller than WOFF
-- Subset fonts\*
+- Subset fonts
 
 ```css
 @font-face {
@@ -598,8 +601,6 @@ CLS - Layout shift
   src: url(some/path/to/typeface.woff2) format("woff2");
 }
 ```
-
-<p class="absolute bottom-0 text-xs">* subset fonts can't be used in preload</p>
 
 ---
 layout: section
@@ -631,7 +632,7 @@ Performs DNS lookup, TCP handshake, and [TLS](https://www.cloudflare.com/learnin
 
 <v-click>
 
-Cons: If an established connection is not used quickly (within 10 seconds on Chrome), it would automatically be closed by the browser
+Cons: If an established connection is not used soon, the browser may close it (timing is browser-dependent; Chrome is often around 10s)
 
 </v-click>
 
@@ -643,7 +644,7 @@ Cons: If an established connection is not used quickly (within 10 seconds on Chr
 
 [speed up 30% TTI in Netflix](https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9)
 
-**takes two requests**, and the second uses the prefetch cache from the first
+Can appear as **two entries in DevTools** (one prefetch, one real fetch), and the second often reuses the prefetched cache entry
 
 <img alt="prefetch-cache" src='/prefetch-cache.png' class="w-80%"/>
 
@@ -659,15 +660,15 @@ layout: two-cols
 
 ## preload
 
-Preload is a declarative fetch, and it’s **mandatory** for browsers; priority depends on the value of the `as` attribute (and browser scheduling)
+Preload is a declarative fetch, and browsers generally treat it as a **high-priority required fetch**; priority still depends on the value of the `as` attribute (and browser scheduling)
 
-Works best on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) on the current page, such as fonts, CSS, or critical JavaScript
+Works particularly well on resources that are part of the [critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path) on the current page, such as fonts, CSS, or critical JavaScript
 
 ```html
 <link rel="preload" as="image" href="header-logo.svg" />
 ```
 
-**only takes one request**, with a warning if not used in 3 seconds
+Ideally **one network transfer**, with a warning if not used shortly after load (browser-dependent)
 
 ::right::
 
@@ -713,7 +714,7 @@ But they are not true idle scheduling mechanisms suitable for **non-critical** t
 
 More important works like **rendering** and **user interaction** will be blocked
 
-Scheduling non-essential work yourself is very difficult. It’s impossible to figure out exactly how much frame time remains because, after `requestAnimationFrame` callbacks execute, there are style calculations, layout, paint, and other browser internals that still need to run
+Scheduling non-essential work yourself is very difficult. It’s hard to know exactly how much frame time remains because, after `requestAnimationFrame` callbacks execute, there are style calculations, layout, paint, and other browser internals that still need to run
 
 </v-click>
 
@@ -736,7 +737,7 @@ remaining time of each frame (**16.67ms** at 60fps)
 at most **50ms** when there is no post-render work
 <img  alt="ric-idle" src='/ric-idle.png' class="m-auto"/>
 
-**100ms** is the maximum time human can feel the delay
+**~100ms** is a commonly cited threshold where users start to notice delay
 
 </div>
 </div>
@@ -769,12 +770,12 @@ function myNonEssentialWork(deadline) {
 Cancel the callback
 
 ```js
-cancelIdleCallback(handle);
+cancelIdleCallback(handler);
 ```
 
 ---
 
-## Best Practice
+## Recommended Practice
 
 **Recommended:**
 
@@ -807,8 +808,8 @@ layout: section
 **More Recommended:**
 
 - **webp**: supports both **lossy and lossless** compression as well as **animation and transparency**, and offers better compression for the same quality as JPEGs and PNGs
-- heic/heif: supports both **lossy and lossless** compression, with **better compression** than WebP, JPEG, PNG, and GIF, but is mostly limited to the Apple ecosystem because it is complex and expensive to license
-- avif: a **lossy** image format based on the AV1 video format, offering **significant compression** and quality improvements over JPEG and WebP
+- heic/heif: supports both **lossy and lossless** compression, and can often achieve better compression than WebP/JPEG/PNG/GIF in many scenarios, but is mostly limited to the Apple ecosystem because it is complex and expensive to license
+- avif: an image format based on AV1 that supports both **lossy and lossless** compression, often with better compression than JPEG/WebP at similar quality
 
 </v-click>
 
