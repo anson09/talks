@@ -832,7 +832,6 @@ layout: section
   <source type="image/heic" srcset="/image.heic" />
   <source type="image/avif" srcset="/image.avif" />
   <source type="image/webp" srcset="/image.webp" />
-  <source type="image/jpeg" srcset="/image.jpeg" />
   <img src="/image.jpeg" alt="Description" />
 </picture>
 ```
