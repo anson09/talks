@@ -849,7 +849,7 @@ layout: section
 layout: intro
 ---
 
-_Painting can break the elements in the layout tree into layers. Promoting content into layers on the GPU (instead of the main thread on the CPU) improves paint and repaint performance. There are specific properties and elements that instantiate a layer, including \<video\> and \<canvas\>, and any element which has the CSS properties of opacity, a 3D transform, will-change, and a few others. These nodes will be painted onto their own layer, along with their descendants, unless a descendant necessitates its own layer for one (or more) of the above reasons._
+_During painting/compositing, browsers may split elements into multiple compositing layers. Promoting content to a composited layer can improve performance for some cases (especially transform/opacity animations) by reducing repaint work and relying more on compositor operations, but it is not always faster and can increase memory/rasterization cost. Layer promotion is browser- and situation-dependent: elements such as \<video\>, \<canvas\>, and styles like 3D transforms or will-change often trigger it, while properties like opacity may create a stacking context but do not always guarantee a separate composited layer._
 
 ---
 
